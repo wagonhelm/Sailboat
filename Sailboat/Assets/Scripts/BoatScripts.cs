@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class BoatScripts : MonoBehaviour
 {
 
-    enum Tack : short { forward, port, astern, starboard };
+    public enum Tack : short { forward, port, astern, starboard };
 
     /* Public Variable */
     public float tiller;
@@ -82,7 +82,7 @@ public class BoatScripts : MonoBehaviour
     string getTack()
     /* forward is considered 30 degrees off bow, astern is considered 5 degrees off stern */
     {
-        int forwardCut = 30;
+        int forwardCut = 5;
         int asternCut = 5;
 
         float angle = transform.rotation.eulerAngles.y;

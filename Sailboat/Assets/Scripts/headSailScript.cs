@@ -16,15 +16,28 @@ public class headSailScript : MonoBehaviour
     public float jibSheet = 0;
     public Text jibSailStatus;
 
+    public GameObject boat;
+    private BoatScripts boatScripts;
+
+    string sailTack = "";
+
     // Start is called before the first frame update
     void Start()
     {
+        boatScripts = boat.GetComponent<BoatScripts>();
         jibSailStatus.text = "";
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        /* Initialize sailTack */
+        if (sailTack == "")
+        {
+            sailTack = boatScripts.tack;
+        }
+
         /* Get Inputs */
         jibSheetIn = Input.GetKey(KeyCode.O);
         jibSheetOut = Input.GetKey(KeyCode.P);
@@ -33,14 +46,43 @@ public class headSailScript : MonoBehaviour
         if (jibSheetOut && jibSheet < maxJibSheet)
         {
             jibSheet += 1;
-            transform.RotateAround(transform.parent.position, transform.parent.up, 1f);
+            if (sailTack == "starboard")
+            {
+                transform.RotateAround(transform.parent.position, transform.parent.up, 1f);
+            }
+            else
+            {
+                transform.RotateAround(transform.parent.position, transform.parent.up, -1f);
+            }
         }
+
         if (jibSheetIn && jibSheet > minJibSheet)
         {
             jibSheet -= 1;
-            transform.RotateAround(transform.parent.position, transform.parent.up, -1f);
+            if (sailTack == "starboard")
+            {
+                transform.RotateAround(transform.parent.position, transform.parent.up, -1f);
+            }
+            else
+            {
+                transform.RotateAround(transform.parent.position, transform.parent.up, 1f);
+            }
         }
 
-        jibSailStatus.text = "Headsail: " + jibSheet.ToString();
+        if (boatScripts.tack == "port" && sailTack == "starboard")
+        {
+            transform.RotateAround(transform.parent.position, transform.parent.up, jibSheet * -2f);
+            sailTack = "port";
+        }
+
+        if (boatScripts.tack == "starboard" && sailTack == "port")
+        {
+            transform.RotateAround(transform.parent.position, transform.parent.up, jibSheet * 2f);
+            sailTack = "starboard";
+        }
+
+
+        jibSailStatus.text = "jibsheet: " + jibSheet.ToString() + " " + sailTack + " tack";
+
     }
 }
