@@ -444,10 +444,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boatLength: 6
-  maxSpeed: 0
   tillerPos: -1
   mainSheet: 0
   jibSheet: 0
+  tack: 0
 --- !u!4 &1415983973
 Transform:
   m_ObjectHideFlags: 0

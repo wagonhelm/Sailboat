@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BoatScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
+    <Compile Include="Assets\Scripts\HullScript.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Utilities.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">

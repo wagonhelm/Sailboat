@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BoatScript : MonoBehaviour
 {
-    /* Objects that comprise boat */
-    GameObject hull;
-    GameObject mast;
-    GameObject forestay;
-    GameObject mainSail;
-    GameObject headSail;
-    GameObject rudder;
-
     /* Public Variables */
     public float boatLength = 6f;
-    public float maxSpeed;
     [Range(-1f, 1f)] 
     public float tillerPos;
     [Range(0, 90)]
     public int mainSheet = 0;
     [Range(0, 90)]
     public int jibSheet = 0;
+    public Utilities.Tack tack;
 
     /* Private Variables */
     private int mainSheetMin = 0;
@@ -29,13 +22,11 @@ public class BoatScript : MonoBehaviour
     private int jibSheetMin = 0;
     private int jibSheetMax = 90;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        createHull(boatLength);
-        // Max speed in knots
-        maxSpeed = Utilities.msToKnots(Utilities.calcHullSpeed(boatLength));
+        // Create hull with reference to BoatClass parent class
+        HullScript hull = new HullScript(boatLength, this);
+        Debug.Log("Hull created with length: " + hull.length.ToString()  + "m water line length: " + hull.waterLineLength + "m  and max hull speed: " + hull.hullSpeed.ToString() + " knots");
     }
 
     // Update is called once per frame
@@ -43,7 +34,7 @@ public class BoatScript : MonoBehaviour
     {
         
     }
-
+     
     /* Public Methods ========================================================== */
     public void mainSheetIn()
     {
@@ -74,21 +65,6 @@ public class BoatScript : MonoBehaviour
     {
         Debug.Log("Boat: Set Tiller To: " + tillerInput.ToString());
         tillerPos = tillerInput;
-    }
-
-    /* Private Methods ======================================================== */
-
-    // Creates hull of boat in meters
-    private void createHull(float length)
-    {
-        float widthScale = 2.75f;
-        float heightScale = 6f;
-        hull = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        hull.transform.SetParent(this.transform);
-        hull.name = "Hull";
-        hull.transform.localScale = new Vector3(length / widthScale, length / heightScale, length);
-        hull.transform.position = new Vector3(0f, length / (heightScale * 2f), 0f);
-        hull.AddComponent<Rigidbody>();
     }
 
 }

@@ -4,7 +4,10 @@ using UnityEngine;
 
 /* General static methods for useful calculations */
 public class Utilities : MonoBehaviour
+    
 {
+    public enum Tack { forward, starboard, aft, port }
+
     // Convert m/s to knots
     static public float msToKnots(float speed)
     {
@@ -12,9 +15,9 @@ public class Utilities : MonoBehaviour
     }
 
     // Calculate hull speed in m/s 
-    static public float calcHullSpeed(float length)
+    static public float calcHullSpeed(float waterLineLength)
     {
-        float waterline = length * 0.8f;
-        return 1.34f * (float)System.Math.Sqrt(waterline);
+        return 1.34f * (float)System.Math.Sqrt(waterLineLength);
     }
+
 }
