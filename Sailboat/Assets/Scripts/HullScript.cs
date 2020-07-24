@@ -2,36 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HullScript 
+public class HullScript
     
 {
     public float length;
     public float hullSpeed;
     public float waterLineLength;
-    public GameObject hull;
-    private BoatScript boatscript;
+    public BoatScript boatScript;
+    public Vector3 boatDim;
 
-    public HullScript(float length, BoatScript boatscript)
-    {
-        this.length = length;
-        this.boatscript = boatscript;
+    public HullScript(float length, BoatScript boat) {
+        this.length = boat.boatLength;
         this.waterLineLength = getWaterLineLength(length);
-        this.hullSpeed = Utilities.msToKnots(Utilities.calcHullSpeed(this.waterLineLength));
-        this.hull = createHull(length);
-    }
-
-    private GameObject createHull(float length)
-    {
-        GameObject hull;
-        float widthScale = 2.75f;
-        float heightScale = 6f;
-        hull = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        hull.transform.SetParent(this.boatscript.transform);
-        hull.name = "Hull";
-        hull.transform.localScale = new Vector3(length / widthScale, length / heightScale, length);
-        hull.transform.position = new Vector3(0f, length / (heightScale * 2f), 0f);
-        hull.AddComponent<Rigidbody>();
-        return hull;
+        this.hullSpeed = Utilities.msToKnots(Utilities.calcHullSpeed(waterLineLength));
+        Debug.Log("Hull created:\nlength: " + this.length.ToString() + "m waterline: " + this.waterLineLength + "m  and hullspeed: " + this.hullSpeed.ToString() + " knots");
+        this.boatDim = Vector3.Scale(new Vector3(length/10, length/10, length/10), boat.transform.localScale);
+        Debug.Log("Boat dimensions: " + boatDim.ToString());
     }
 
     static float getWaterLineLength(float length)

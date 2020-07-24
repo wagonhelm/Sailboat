@@ -20,4 +20,10 @@ public class Utilities : MonoBehaviour
         return 1.34f * (float)System.Math.Sqrt(waterLineLength);
     }
 
+    // Add force from a position with debug line
+    static public void addForcePositionDebug(Rigidbody rb, Vector3 force, Vector3 position, float power)
+    {
+        rb.AddForceAtPosition(force * power, position);
+        Debug.DrawLine(position, position + (force * power), Color.red);
+    }
 }
